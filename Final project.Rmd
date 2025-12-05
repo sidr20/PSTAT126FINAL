@@ -190,8 +190,17 @@ $X_i: carat$\
 
 **2.2**\
 
+**Summary and interpretation of Linear Model**\
+
 ```{r, echo = FALSE}
 simple_model <- lm(dataset$price ~ dataset$carat, data = dataset)
 summary(simple_model)
 ```
+In this simple linear regression model, the first thing that we see is that *carat* is statistically significant with a p value that is far less that our standard significance level of $\alpha = .05$. The $R^2$ is 0.8493, which is pretty high, telling us that this predictor seems to be useful to the model. It explains 84.93% of the variability in *price*. The global significance test, although not as important in a simple linear regression model, is also significant which further proves that *carat* is a useful predictor for *price*. The confidence interval for $\beta_0$ & $\beta_1$ is given by:\
+
+$$\beta_0: -2256.40 \pm -172.8 *13.05$$\
+$$\beta_1: 7756.44 \pm 551.4 * 14.07$$\
+
+
+
 
