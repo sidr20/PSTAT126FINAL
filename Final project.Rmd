@@ -1,0 +1,66 @@
+---
+title: 'PSTAT 126 Final Project'
+
+output: 
+  pdf_document: 
+    toc: false 
+    number_sections: true 
+    includes: null 
+    latex_engine: xelatex 
+    keep_tex: false 
+    pandoc_args: null 
+geometry: margin=0.7in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message =  FALSE)
+knitr::opts_chunk$set(warning =  FALSE)
+knitr::opts_chunk$set(error =  FALSE)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(gridExtra)
+dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
+```
+
+:::: callout
+::: {style="text-align: center"}
+[**STUDENT NAME**]{style="color: blue;"}
+:::
+
+-   Miles Reynolds (A051P79)
+-   Sid Revanuru (A058P90)
+::::
+
+## Part 1: Data Description and Descriptive Statistics
+
+**1.1**\
+
+```{r, echo = FALSE}
+head(dataset)
+set.seed(29)
+head(sample(dataset, 5))
+```
+**1.2**\
+```{r, echo = FALSE}
+summary(dataset)
+```
+
+- X\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=x)) +
+  geom_histogram() +
+  theme_minimal()
+```
+- Y\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=y)) +
+  geom_histogram() +
+  theme_minimal()
+```
+- z\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=z)) +
+  geom_histogram() +
+  theme_minimal()
+```
