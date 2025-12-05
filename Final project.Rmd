@@ -20,7 +20,7 @@ library(dplyr)
 library(knitr)
 library(ggplot2)
 library(gridExtra)
-dataset <- read.csv("Diamonds Prices2022.csv")
+dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
 ```
 
 :::: callout
@@ -36,12 +36,22 @@ dataset <- read.csv("Diamonds Prices2022.csv")
 
 **1.1**\
 
-```{r, echo = FALSE}
+**Dataset**\
+
+```{r. echo = FALSE}
 head(dataset)
+```
+
+**Random Sample**\
+
+```{r, echo = FALSE}
 set.seed(29)
 head(sample(dataset, 5))
 ```
+
 **1.2**\
+
+**Summary**\
 ```{r, echo = FALSE}
 summary(dataset)
 ```
@@ -109,6 +119,7 @@ ggplot(dataset, aes(x=z)) +
   geom_histogram() +
   theme_minimal()
 ```
+
 The "Carat" variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.\
 
 - Cut\
