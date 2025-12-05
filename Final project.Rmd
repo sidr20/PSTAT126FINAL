@@ -36,8 +36,12 @@ dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Pri
 
 **1.1**\
 
-```{r, echo = FALSE}
+**Dataset:**\
+```{r}
 head(dataset)
+```
+**Random Sample**\
+```{r, echo = FALSE}
 set.seed(29)
 head(sample(dataset, 5))
 ```
@@ -90,4 +94,23 @@ ggplot(dataset, aes(x=z)) +
   geom_histogram() +
   theme_minimal()
 ```
-The Carat variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.
+The Carat variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.\
+
+- Cut\
+```{r}
+ggplot(dataset, aes(x=cut)) +
+  geom_bar() +
+  theme_minimal()
+```
+- Color\
+```{r}
+ggplot(dataset, aes(x=color)) +
+  geom_bar() +
+  theme_minimal()
+```
+Clarity\
+```{r}
+ggplot(dataset, aes(x=clarity)) +
+  geom_bar() +
+  theme_minimal()
+```
