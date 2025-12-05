@@ -167,6 +167,8 @@ chisq.test(table(dataset$cut, dataset$clarity))
 
 A chi-square test was performed to examine the relationship between *cut* and *clarity*, the two categorical variables. The p-value is extremely close to 0, indicating that there is a statistically significant association between *cut* and *clarity*.
 
+**1.4**\
+
 **Multiple Linear Regression Model**\
 
 We are choosing *price* as the response variable because logically, price would be the most influenced by the other variables in the dataset.
@@ -174,7 +176,22 @@ We are choosing *price* as the response variable because logically, price would 
 model <- lm(dataset$price ~ dataset$y + dataset$z + dataset$carat + dataset$clarity + dataset$cut, data = dataset)
 summary(model)
 ```
+**1.5**\
 
 Overall, the multiple linear regression model does not surprise because intuitively, price would be the most influenced by the predictors we chose. We can see that all the predictors are statistically significant. Both the partial and global significance test show that the predictors and the model as a whole are significant. The $R^2$ and adjusted $R^2$ values are very similar which tells us that all the predictors we chose are very useful to the model.\
 
-# Part 2: Simple 
+# Part 2: Simple Linear Regression #
+
+**2.1**\
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+$Y_i: price$\
+$X_i: carat$\
+
+**2.2**\
+
+```{r, echo = FALSE}
+simple_model <- lm(dataset$price ~ dataset$carat, data = dataset)
+summary(simple_model)
+```
+
