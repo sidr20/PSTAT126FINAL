@@ -18,8 +18,9 @@ knitr::opts_chunk$set(warning =  FALSE)
 knitr::opts_chunk$set(error =  FALSE)
 library(dplyr)
 library(knitr)
-library(ggplot2)
 library(gridExtra)
+library(ggplot2)
+library(GGally)
 dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
 ```
 
@@ -38,7 +39,7 @@ dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Pri
 
 **Dataset**\
 
-```{r. echo = FALSE}
+```{r, echo = FALSE}
 head(dataset)
 ```
 
@@ -148,4 +149,16 @@ ggplot(dataset, aes(x=clarity)) +
   theme_minimal()
 ```
 
-In terms of "clarity", most diamonds fall under the "S" category, with SI1 and VS2 accounting for most of the data set.
+In terms of "clarity", most diamonds fall under the "S" category, with SI1 and VS2 accounting for most of the data set.\
+
+**1.3**\
+
+**Correlation**\
+
+
+**Multiple Linear Regression Model**\
+
+```{r, echo = FALSE}
+model <- lm(dataset$price ~ dataset$y + dataset$z + dataset$carat + dataset$clarity + dataset$cut, data = dataset)
+summary(model)
+```
