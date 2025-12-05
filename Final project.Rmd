@@ -58,7 +58,31 @@ ggplot(dataset, aes(x=y)) +
   geom_histogram() +
   theme_minimal()
 ```
-- z\
+- Z\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=z)) +
+  geom_histogram() +
+  theme_minimal()
+```
+- Price\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=price)) +
+  geom_histogram() +
+  theme_minimal()
+```
+- Table\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=table)) +
+  geom_histogram() +
+  theme_minimal()
+```
+- Depth\
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
+ggplot(dataset, aes(x=depth)) +
+  geom_histogram() +
+  theme_minimal()
+```
+Carat\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=z)) +
   geom_histogram() +
