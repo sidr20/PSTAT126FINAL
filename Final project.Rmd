@@ -76,15 +76,18 @@ ggplot(dataset, aes(x=table)) +
   geom_histogram() +
   theme_minimal()
 ```
+This distribution looks like it is centered around 55-57 with a very slight right skew. It looks to be approximately normally distributed.\
 - Depth\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=depth)) +
   geom_histogram() +
   theme_minimal()
 ```
+The Depth variable is approximately normally distributed with a a mean around 61-61. Looking at it visually, there doesn't seem to be much of a skew.\
 Carat\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=z)) +
   geom_histogram() +
   theme_minimal()
 ```
+The Carat variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.
