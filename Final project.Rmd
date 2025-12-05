@@ -20,7 +20,7 @@ library(dplyr)
 library(knitr)
 library(ggplot2)
 library(gridExtra)
-dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
+dataset <- read.csv("Diamonds Prices2022.csv")
 ```
 
 :::: callout
@@ -32,16 +32,12 @@ dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Pri
 -   Sid Revanuru (A058P90)
 ::::
 
-## Part 1: Data Description and Descriptive Statistics
+# Part 1: Data Description and Descriptive Statistics #
 
 **1.1**\
 
-**Dataset:**\
-```{r}
-head(dataset)
-```
-**Random Sample**\
 ```{r, echo = FALSE}
+head(dataset)
 set.seed(29)
 head(sample(dataset, 5))
 ```
@@ -56,61 +52,89 @@ ggplot(dataset, aes(x=x)) +
   geom_histogram() +
   theme_minimal()
 ```
+
+The distribution for "x" appears to be centered around 6 mm and slightly skewed right. 
+
 - Y\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=y)) +
   geom_histogram() +
   theme_minimal()
 ```
+
+The distribution for "y" appears to be strongly centered around the 6-8 range, displaying low variance compared to "x".
+
+\newpage
 - Z\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=z)) +
   geom_histogram() +
   theme_minimal()
 ```
+
+The "z" variable is strongly centered around 4 mm, with a slight right skew. 
+
 - Price\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=price)) +
   geom_histogram() +
   theme_minimal()
 ```
+
+The variable "price" is skewed right, with a mean of a round 2.5k and having a minimum of around 300 with values ranging way up into the ten-thousands.
+
+\newpage
 - Table\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=table)) +
   geom_histogram() +
   theme_minimal()
 ```
-This distribution looks like it is centered around 55-57 with a very slight right skew. It looks to be approximately normally distributed.\
+
+The "Table" distribution looks like it is centered around 55-57 with a very slight right skew. It looks to be approximately normally distributed.\
+
 - Depth\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=depth)) +
   geom_histogram() +
   theme_minimal()
 ```
-The Depth variable is approximately normally distributed with a a mean around 61-61. Looking at it visually, there doesn't seem to be much of a skew.\
-Carat\
+
+The "Depth" variable is approximately normally distributed with a a mean around 61-61. Looking at it visually, there doesn't seem to be much of a skew.\
+
+\newpage
+- Carat\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=z)) +
   geom_histogram() +
   theme_minimal()
 ```
-The Carat variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.\
+The "Carat" variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.\
 
 - Cut\
-```{r}
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=cut)) +
   geom_bar() +
   theme_minimal()
 ```
+
+Most cuts appear to be "ideal" and there is more cuts deemed better than ideal than worse than ideal, indicating a slight skew left. 
+
+\newpage
 - Color\
-```{r}
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=color)) +
   geom_bar() +
   theme_minimal()
 ```
+
+The diamonds are fairly spread out over each of the colors with "G" accounting for most of the data set.
+
 Clarity\
-```{r}
+```{r, echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(dataset, aes(x=clarity)) +
   geom_bar() +
   theme_minimal()
 ```
+
+In terms of "clarity", most diamonds fall under the "S" category, with SI1 and VS2 accounting for most of the data set.
