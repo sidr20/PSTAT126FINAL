@@ -214,7 +214,6 @@ Looking at these two plots, we can see that our assumptions are violated due to 
 
 ```{r, echo = FALSE}
 log_model <- lm(log(dataset$price) ~ log(dataset$carat), data = dataset)
-summary(log_model)
 ```
 
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
@@ -223,3 +222,15 @@ plot(log_model, which = 2)
 ```
 
 We can see here that after applying the log transformation, the residuals v fitted plot is much more scattered and the QQ plot is much more linear. This satisfies our assumptions.
+
+**2.4**\
+
+**Summary of Log Transformation**\
+
+```{r, echo = FALSE}
+summary(log_model)
+```
+The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction. The standard error went down significantly from our first model. The $R^2$ value went up more of the variability of *price* is explained by *carat*. Overall the model is much better.\
+
+**2.5**\
+
