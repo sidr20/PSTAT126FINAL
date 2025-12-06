@@ -92,7 +92,7 @@ ggplot(dataset, aes(x=price)) +
   theme_minimal()
 ```
 
-The variable "price" is skewed right, with a mean of a round 2.5k and having a minimum of around 300 with values ranging way up into the ten-thousands.
+The variable "price" is skewed right, with a mean of around 2.5k and having a minimum of around 300, with values ranging way up into the ten-thousands.
 
 \newpage
 - Table\
@@ -111,7 +111,7 @@ ggplot(dataset, aes(x=depth)) +
   theme_minimal()
 ```
 
-The "Depth" variable is approximately normally distributed with a a mean around 61-61. Looking at it visually, there doesn't seem to be much of a skew.\
+The "Depth" variable is approximately normally distributed with a mean around 61. Looking at it visually, there doesn't seem to be much of a skew.\
 
 \newpage
 - Carat\
@@ -130,7 +130,7 @@ ggplot(dataset, aes(x=cut)) +
   theme_minimal()
 ```
 
-Most cuts appear to be "ideal" and there is more cuts deemed better than ideal than worse than ideal, indicating a slight skew left. 
+Most cuts appear to be "ideal," and there are more cuts deemed better than ideal than worse than ideal, indicating a slight skew left. 
 
 \newpage
 - Color\
@@ -140,7 +140,7 @@ ggplot(dataset, aes(x=color)) +
   theme_minimal()
 ```
 
-The diamonds are fairly spread out over each of the colors with "G" accounting for most of the data set.
+The diamonds are fairly spread out over each of the colors, with "G" accounting for most of the data set.
 
 Clarity\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
@@ -178,7 +178,7 @@ summary(model)
 ```
 **1.5**\
 
-Overall, the multiple linear regression model does not surprise because intuitively, price would be the most influenced by the predictors we chose. We can see that all the predictors are statistically significant. Both the partial and global significance test show that the predictors and the model as a whole are significant. The $R^2$ and adjusted $R^2$ values are very similar which tells us that all the predictors we chose are very useful to the model.\
+Overall, the multiple linear regression model does not surprise because intuitively, price would be the most influenced by the predictors we chose. We can see that all the predictors are statistically significant. Both the partial and global significance tests show that the predictors and the model as a whole are significant. The $R^2$ and adjusted $R^2$ values are very similar, which tells us that all the predictors we chose are very useful to the model.\
 
 # Part 2: Simple Linear Regression #
 
@@ -196,7 +196,7 @@ $X_i: carat$\
 simple_model <- lm(dataset$price ~ dataset$carat, data = dataset)
 summary(simple_model)
 ```
-In this simple linear regression model of $\hat{price} = -2256.40 + 7756.44$(carat), the first thing that we see is that *carat* is statistically significant with a p value that is far less that our standard significance level of $\alpha = .05$, this is the partial significance test. This means that each additional carat increases the expected price by approximately 7,756 dollars. The $R^2$ is 0.8493, which is pretty high, telling us that this predictor seems to be useful to the model and is matched by adjusted $R^2$. It explains 84.93% of the variability in *price*. The residual standard error was 1549, indicating the typical prediction error for our model. The global significance test, although not as important in a simple linear regression model, is also significant (p-val close to 0) which further proves that *carat* is a useful predictor for *price*. The confidence interval for $\beta_0$ & $\beta_1$ is given by:\
+In this simple linear regression model of $\hat{price} = -2256.40 + 7756.44$(carat), the first thing that we see is that *carat* is statistically significant with a p value that is far less than our standard significance level of $\alpha = .05$, this is the partial significance test. This means that each additional carat increases the expected price by approximately 7,756 dollars. The $R^2$ is 0.8493, which is pretty high, telling us that this predictor seems to be useful to the model and is matched by the adjusted $R^2$. It explains 84.93% of the variability in *price*. The residual standard error was 1549, indicating the typical prediction error for our model. The global significance test, although not as important in a simple linear regression model, is also significant (p-val close to 0), which further proves that *carat* is a useful predictor for *price*. The confidence interval for $\beta_0$ & $\beta_1$ is given by:\
 
 $$\beta_0: -2256.40 \pm -172.8 *13.05$$\
 $$\beta_1: 7756.44 \pm 551.4 * 14.07$$\
@@ -210,7 +210,7 @@ plot(simple_model, which = 1)
 plot(simple_model, which = 2)
 ```
 
-Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Lets try and do a transformation to fix this. Lets do a log transformation on the response variable and the predictors:\
+Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Let's try and do a transformation to fix this. Let's do a log transformation on the response variable and the predictors:\
 
 ```{r, echo = FALSE}
 log_model <- lm(log(dataset$price) ~ log(dataset$carat), data = dataset)
@@ -230,11 +230,11 @@ We can see here that after applying the log transformation, the residuals v fitt
 ```{r, echo = FALSE}
 summary(log_model)
 ```
-The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction for a 0 carat diamond. The standard error went down significantly from our first model making this model more accurate. The $R^2$ value went up meaning more of the variability of *price* is explained by *carat*. Overall this log price model is much better and does not appear to violated any model assumptions.\
+The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction for a 0-carat diamond. The standard error went down significantly from our first model, making this model more accurate. The $R^2$ value went up, meaning more of the variability of *price* is explained by *carat*. Overall, this log price model is much better and does not appear to violate any model assumptions.\
 
 **2.5**\
 
-Lets add a variable to improved model. We will add *depth*:\
+Let's add a variable to the improved model. We will add *depth*:\
 
 ```{r, echo = FALSE, results = "hide"}
 new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth), data = dataset)
@@ -259,4 +259,5 @@ Overall, this new model explains 93.51% of the variability in *price*.\
 
 **2.6**\
 
-We found that taking the log of the response variable and predictors changed the interpretation of the model to talking about proportions instead of dollar amount like the original simple linear regression model.\
+We found that taking the log of the response variable and predictors changed the interpretation of the model to talking about proportions instead of dollar amounts like the original simple linear regression model.\
+
