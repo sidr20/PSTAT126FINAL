@@ -210,7 +210,7 @@ plot(simple_model, which = 1)
 plot(simple_model, which = 2)
 ```
 
-Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Lets try and do a transformation to fix this. Lets do a log transformation on the response variable:\
+Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Lets try and do a transformation to fix this. Lets do a log transformation on the response variable and the predictors:\
 
 ```{r, echo = FALSE}
 log_model <- lm(log(dataset$price) ~ log(dataset$carat), data = dataset)
@@ -230,7 +230,23 @@ We can see here that after applying the log transformation, the residuals v fitt
 ```{r, echo = FALSE}
 summary(log_model)
 ```
-The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction. The standard error went down significantly from our first model. The $R^2$ value went up more of the variability of *price* is explained by *carat*. Overall the model is much better.\
+The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction for a 0 carat diamond. The standard error went down significantly from our first model making this model more accurate. The $R^2$ value went up meaning more of the variability of *price* is explained by *carat*. Overall this log price model is much better and does not appear to violated any model assumptions.\
 
 **2.5**\
 
+Lets add a variable to improved model. We will add *depth*:\
+
+```{r, echo = FALSE}
+new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth), data = dataset)
+summary(new_model)
+```
+
+We see that the $R^2$ value increased slightly, meaning that *depth* does a good job in explaining the variability in *price*.\
+
+Lets add *table*:\
+
+```{r, echo = FALSE}
+new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth) + log(dataset$table), data = dataset)
+summary(new_model)
+```
+The $R^2$ value increased again, meaning that adding *table* also helps explain the variability in *price*. Both predictors are statistically significant as well and useful to the model.
