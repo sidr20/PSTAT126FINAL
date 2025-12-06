@@ -116,12 +116,12 @@ The "Depth" variable is approximately normally distributed with a a mean around 
 \newpage
 - Carat\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
-ggplot(dataset, aes(x=z)) +
+ggplot(dataset, aes(x=carat)) +
   geom_histogram() +
   theme_minimal()
 ```
 
-The "Carat" variable does not have much of a skew, but is heavily centered around 2-6 carats. Most of the data is concentrated within this range.\
+The *Carat* variable is skewed to the right with it being centered within .3-.5 carats.\
 
 - Cut\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
@@ -236,17 +236,27 @@ The first thing that I notice is that the estimate for $B_0$ is no longer negati
 
 Lets add a variable to improved model. We will add *depth*:\
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, results = "hide"}
 new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth), data = dataset)
 summary(new_model)
 ```
 
-We see that the $R^2$ value increased slightly, meaning that *depth* does a good job in explaining the variability in *price*.\
+We see that the $R^2$ value increased slightly from .933 to .9337, meaning that *depth* does a good job in explaining the variability in *price*.\
 
 Lets add *table*:\
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, results = "hide"}
 new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth) + log(dataset$table), data = dataset)
 summary(new_model)
 ```
-The $R^2$ value increased again, meaning that adding *table* also helps explain the variability in *price*. Both predictors are statistically significant as well and useful to the model.
+The $R^2$ value increased again(.9351), meaning that adding *table* also helps explain the variability in *price*. Both predictors are statistically significant as well and useful to the model.\
+
+Since we did a log transformation, the slopes represent the proportional change in *price* associated with a 1% change in the predictor.\
+For each 1% increase in *carat*, the price is expected to increase by 1.69%.\
+For each 1% increase in *depth*, the price is expected to decrease by 1.726%.\
+For each 1% increase in *table*, the price is expected to decrease by 1.06%.\
+Overall, this new model explains 93.51% of the variability in *price*.\
+
+**2.6**\
+
+We found that taking the log of the response variable and predictors changed the interpretation of the model to talking about proportions instead of dollar amount like the original simple linear regression model.\
