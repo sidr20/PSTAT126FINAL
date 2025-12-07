@@ -22,7 +22,7 @@ library(knitr)
 library(gridExtra)
 library(ggplot2)
 library(GGally)
-dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
+dataset <- read.csv("Diamonds Prices2022.csv")
 ```
 
 :::: callout
@@ -122,7 +122,7 @@ ggplot(dataset, aes(x=carat)) +
   theme_minimal()
 ```
 
-The *Carat* variable is skewed to the right with it being centered within .3-.5 carats.\
+The "carat" variable is skewed to the right with it being centered within .3-.5 carats.\
 
 - Cut\
 ```{r, echo = FALSE, fig.width = 4, fig.height = 3}
@@ -131,7 +131,7 @@ ggplot(dataset, aes(x=cut)) +
   theme_minimal()
 ```
 
-Most cuts appear to be "ideal," and there are more cuts deemed better than ideal than worse than ideal, indicating a slight skew left. 
+Most cuts appear to be "ideal," and there are more cuts deemed better than ideal than worse than ideal.
 
 \newpage
 - Color\
@@ -160,7 +160,7 @@ In terms of "clarity", most diamonds fall under the "S" category, with SI1 and V
 cor(dataset[, c("carat", "y", "z")])
 ```
 
-There appears to be a very strong, positive correlation between y, z, and carat. All correlation interactions between the three quantitative variables are above 0.95.
+There appears to be a very strong, positive correlation between the quantative variables y, z, and carat. Meaning that as you increase one variable, the other is likely to increase as well. All correlation interactions between the three quantitative variables are above 0.95.
 
 ```{r, echo = FALSE}
 chisq.test(table(dataset$cut, dataset$clarity))
@@ -172,14 +172,14 @@ A chi-square test was performed to examine the relationship between *cut* and *c
 
 **Multiple Linear Regression Model**\
 
-We are choosing *price* as the response variable because logically, price would be the most influenced by the other variables in the dataset.
+We are choosing *price* as the response variable because, logically, price would be the most influenced by the other variables in the dataset. We are using "y", "z", "carat", "clarity", and "cut" as the independent variables 
 ```{r, echo = FALSE}
 model <- lm(dataset$price ~ dataset$y + dataset$z + dataset$carat + dataset$clarity + dataset$cut, data = dataset)
 summary(model)
 ```
 **1.5**\
 
-Overall, the multiple linear regression model does not surprise because intuitively, price would be the most influenced by the predictors we chose. We can see that all the predictors are statistically significant. Both the partial and global significance tests show that the predictors and the model as a whole are significant. The $R^2$ and adjusted $R^2$ values are very similar, which tells us that all the predictors we chose are very useful to the model.\
+Overall, the multiple linear regression model here does not surprise because, intuitively, price would be the factor most influenced by the predictors we chose. We can see that all the predictors are statistically significant (p-val below 0.05). Both the partial and global significance tests show that the predictors and the model as a whole are significant. The $R^2$ and adjusted $R^2$ values are very similar, which tells us that all the predictors we chose are very useful to the model.\
 
 # Part 2: Simple Linear Regression #
 
@@ -197,10 +197,12 @@ $X_i: carat$\
 simple_model <- lm(dataset$price ~ dataset$carat, data = dataset)
 summary(simple_model)
 ```
-In this simple linear regression model of $\hat{price} = -2256.40 + 7756.44$(carat), the first thing that we see is that *carat* is statistically significant with a p value that is far less than our standard significance level of $\alpha = .05$, this is the partial significance test. This means that each additional carat increases the expected price by approximately 7,756 dollars. The $R^2$ is 0.8493, which is pretty high, telling us that this predictor seems to be useful to the model and is matched by the adjusted $R^2$. It explains 84.93% of the variability in *price*. The residual standard error was 1549, indicating the typical prediction error for our model. The global significance test, although not as important in a simple linear regression model, is also significant (p-val close to 0), which further proves that *carat* is a useful predictor for *price*. The confidence interval for $\beta_0$ & $\beta_1$ is given by:\
+In this simple linear regression model of $\hat{price} = -2256.40 + 7756.44$(carat), the first thing that we see is that *carat* is statistically significant with a p value that is far less than our standard significance level of $\alpha = .05$, this is the partial significance test for our one independent variable. This means that each additional carat increases the expected price by approximately 7,756 dollars. The $R^2$ is 0.8493, which is pretty high, telling us that this predictor seems to be useful to the model and is matched by the adjusted $R^2$. The variable *carat* explains 84.93% of the variability in *price*. The residual standard error was 1549, indicating the typical prediction error for our model. The global significance test, although not as important in a simple linear regression model, is also significant (p-val close to 0), which further proves that *carat* is a useful predictor for *price*. The confidence interval for $\beta_0$ & $\beta_1$ is given by:\
 
 $$\beta_0: -2256.40 \pm -172.8 *13.05$$\
 $$\beta_1: 7756.44 \pm 551.4 * 14.07$$\
+
+\newpage
 
 **2.3**\
 
@@ -211,7 +213,7 @@ plot(simple_model, which = 1)
 plot(simple_model, which = 2)
 ```
 
-Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Let's try and do a transformation to fix this. Let's do a log transformation on the response variable and the predictors:\
+Looking at these two plots, we can see that our assumptions are violated due to the funnel shape of the residuals v fitted plot and the non-linearity of the QQ plot. Let's try and do a transformation to fix this. Let's do a log transformation on the response variable and a log transformation on the predictor:\
 
 ```{r, echo = FALSE}
 log_model <- lm(log(dataset$price) ~ log(dataset$carat), data = dataset)
@@ -222,7 +224,7 @@ plot(log_model, which = 1)
 plot(log_model, which = 2)
 ```
 
-We can see here that after applying the log transformation, the residuals v fitted plot is much more scattered and the QQ plot is much more linear. This satisfies our assumptions.
+We can see here that after applying the log transformation, the residuals v fitted plot is much more scattered and the QQ plot is much more linear. This better satisfies our assumptions.
 
 **2.4**\
 
@@ -231,7 +233,7 @@ We can see here that after applying the log transformation, the residuals v fitt
 ```{r, echo = FALSE}
 summary(log_model)
 ```
-The first thing that I notice is that the estimate for $B_0$ is no longer negative, making it a more realistic prediction for a 0-carat diamond. The standard error went down significantly from our first model, making this model more accurate. The $R^2$ value went up, meaning more of the variability of *price* is explained by *carat*. Overall, this log price model is much better and does not appear to violate any model assumptions.\
+The standard error went down significantly from our first model, making this model more accurate. The $R^2$ value went up, meaning more of the variability of log(*price*) is explained by log(*carat*) as compared to our non-transformed model. Overall, this log price model is much better and does not appear to violate any model assumptions now.\
 
 **2.5**\
 
@@ -242,7 +244,7 @@ new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth), da
 summary(new_model)
 ```
 
-We see that the $R^2$ value increased slightly from .933 to .9337, meaning that *depth* does a good job in explaining the variability in *price*.\
+We see that the $R^2$ value increased slightly from .933 to .9337, meaning that log(*depth*) does a good job in explaining the variability in *price*.\
 
 Lets add *table*:\
 
@@ -250,7 +252,7 @@ Lets add *table*:\
 new_model <- lm(log(dataset$price) ~ log(dataset$carat) + log(dataset$depth) + log(dataset$table), data = dataset)
 summary(new_model)
 ```
-The $R^2$ value increased again(.9351), meaning that adding *table* also helps explain the variability in *price*. Both predictors are statistically significant as well and useful to the model.\
+The $R^2$ value increased again (.9351), meaning that adding log(*table*) also helps explain variability in *price*. Both predictors are statistically significant as well and therefore useful to the model.\
 
 Since we did a log transformation, the slopes represent the proportional change in *price* associated with a 1% change in the predictor.\
 For each 1% increase in *carat*, the price is expected to increase by 1.69%.\
@@ -260,7 +262,7 @@ Overall, this new model explains 93.51% of the variability in *price*.\
 
 **2.6**\
 
-We found that taking the log of the response variable and predictors changed the interpretation of the model to talking about proportions instead of dollar amounts like the original simple linear regression model.\
+One thing we found interesting was that taking the log of the response variable and predictors changed the interpretation of the model to about proportions instead of dollar amounts like the original simple linear regression model.\
 
 # Part 3 #
 
@@ -273,7 +275,7 @@ full_model <- lm(dataset$price ~ . - X, data = dataset)
 step(full_model, direction = "backward")
 ```
 
-We can see that after running the step wise regression using the AIC backward method, the best model includes the predictors: carat, cut, color, clarity, depth, table, x, and z. The only variable that was excluded was y.\
+We can see that after running the step-wise regression using the AIC backward method, the best model includes the predictors: carat, cut, color, clarity, depth, table, x, and z. The only variable that was excluded from the "best model" was y.\
 
 **3.2**\
 
@@ -282,11 +284,11 @@ best_model <- lm(formula = dataset$price ~ dataset$carat + dataset$cut + dataset
     dataset$depth + dataset$table + dataset$x + dataset$z, data = dataset)
 vif(best_model)
 ```
-We can see that the vif values of x, z, carat are well above 5, indicating multicollinearity. Every other predictor in this model has a vif of at least 1. This makes sense because these variables are all related to the size of the diamond.\
+We can see that the vif values of x, z, carat are well above 5, indicating multicollinearity. Every other predictor in this model has a vif of at least 1. This makes sense because these measurement variables are all related to the size of the diamond which would also be in line with its carat value.\
 
-**4.3**\
+**3.3**\
 
-We will create a fake diamond to construct a confidence and prediction interval:\
+We will create a fake diamond to construct a confidence interval (top) and prediction interval (bottom):\
 
 ```{r, echo = FALSE}
 best_model <- lm(formula = price ~ carat + cut + color + clarity + 
@@ -295,13 +297,12 @@ fake_diamond <- data.frame(carat = .8, cut = "Ideal", depth = 62.3, table = 59.1
 predict(best_model, fake_diamond, interval = "confidence")
 predict(best_model, fake_diamond, interval = "prediction")
 ```
-We used an arbitrary diamond to construct and confidence interval and a prediction interval using the best model we obtained because these intervals are conditioned on specific values of the predictors. The intervals we got were:\
-Confidence Interval: $(4921.756, 4917.83)$\
+We used an arbitrary diamond with specific specs (carat = 0.8, cut = "Ideal", depth = 62.3, table = 59.1, z = 4, x = 6, color = "D", and clarity = "VS1") to construct a confidence interval and a prediction interval using the best model. This is because these intervals are conditioned on specific values of the predictors. The intervals we got for this specific diamond are:\
+Confidence Interval: $(4821.756, 4917.83)$\
 Prediction Interval: $(2654.342, 7085.244)$\
 
-**4.4**\
+**3.4**\
 
 **Summary:**\
 
-We started off by examining the different variables in the *diamonds* dataset. After looking at the distributions, correlations, and summaries, we put together a multiple linear regression model using *price* as the response variable. After this, we created a simple linear regression model using the same response variable. After finding out that this model violated some assumptions, we made a log-log transformation to the model, which satisfied our assumptions. Starting from just 1 predictor, we slowly added predictors and examined the $R^2$ values to test if the variables were useful to improve our model. Finally, in order to get the best possible model, we used the AIC backwards step wise regression to obtain the best model, which ended up excluding just *y*. We then checked for multicolinearity by checking the variance inflation factors for our predictors in our best model. Lastly, we created a confidence interval and a prediction interval for a specific observation with the characteristics above.
-
+In our project, we started off by examining the different variables in the *diamonds* dataset. After looking at the distributions, correlations, and summaries, we put together a multiple linear regression model using *price* as the response variable. After this, we created a simple linear regression model using the same response variable and the independent variable *carat*. After finding out that this model potentially violated some assumptions, we made a log-log transformation to the model, which now satisfied our assumptions. Starting from just 1 predictor, we slowly added a few predictors and examined the model's adjusted $R^2$ value to test if the variables were useful to improve our model. Finally, in order to get the best possible model, we used the AIC backwards step wise regression to obtain the best model, which ended up excluding just the variable *y*. We then checked for multicolinearity by checking the variance inflation factors for our predictors in our best model. Lastly, we created a confidence interval and a prediction interval for a specific observation with the characteristics above.
