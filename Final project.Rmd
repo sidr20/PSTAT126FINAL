@@ -22,7 +22,7 @@ library(knitr)
 library(gridExtra)
 library(ggplot2)
 library(GGally)
-dataset <- read.csv("C:/Users/sidre/OneDrive/Desktop/Rwork/PSTAT126/Diamonds Prices2022.csv")
+dataset <- read.csv("Diamonds Prices2022.csv")
 ```
 
 :::: callout
@@ -224,16 +224,16 @@ plot(log_model, which = 1)
 plot(log_model, which = 2)
 ```
 
-We can see here that after applying the log transformation, the residuals v fitted plot is much more scattered and the QQ plot is much more linear. This satisfies our assumptions.
+We can see here that after applying the log-log transformation, the residuals v fitted plot is much more scattered and the QQ plot is much more linear. This satisfies our assumptions.
 
 **2.4**\
 
-**Summary of Log Transformation**\
+**Summary of Log-Log Transformation**\
 
 ```{r, echo = FALSE}
 summary(log_model)
 ```
-The standard error went down significantly from our first model, making this model more accurate. The $R^2$ value went up, meaning more of the variability of log(*price*) is explained by log(*carat*) as compared to our non-transformed model. Overall, this log price model is much better and does not appear to violate any model assumptions now.\
+The standard error went down significantly from our first model, making this model more accurate. The $R^2$ value went up, meaning more of the variability of log(*price*) is explained by log(*carat*) as compared to our non-transformed model. Overall, this log-log price model is much better and does not appear to violate any model assumptions now.\
 
 **2.5**\
 
@@ -254,7 +254,7 @@ summary(new_model)
 ```
 The $R^2$ value increased again (.9351), meaning that adding log(*table*) also helps explain variability in *price*. Both predictors are statistically significant as well and therefore useful to the model.\
 
-Since we did a log transformation, the slopes represent the proportional change in *price* associated with a 1% change in the predictor.\
+Since we did a log-log transformation, the slopes represent the proportional change in *price* associated with a 1% change in the predictor, as opposed to direct dollar values.\
 For each 1% increase in *carat*, the price is expected to increase by 1.69%.\
 For each 1% increase in *depth*, the price is expected to decrease by 1.726%.\
 For each 1% increase in *table*, the price is expected to decrease by 1.06%.\
@@ -262,7 +262,7 @@ Overall, this new model explains 93.51% of the variability in *price*.\
 
 **2.6**\
 
-One thing we found interesting was that taking the log of the response variable and predictors changed the interpretation of the model to about proportions instead of dollar amounts like the original simple linear regression model.\
+One thing we found interesting was that taking the log of the response variable AND predictors changed the interpretation of the model to about proportions instead of dollar amounts like the original simple linear regression model.\
 
 # Part 3 #
 
@@ -277,6 +277,7 @@ step(full_model, direction = "backward")
 
 We can see that after running the step-wise regression using the AIC backward method, the best model includes the predictors: carat, *cut*, *color*, *clarity*, *depth*, *table*, *x*, and *z*. The only variable that was excluded from the "best model" was *y*.\
 
+\newpage
 **3.2**\
 
 ```{r, echo = FALSE}
@@ -305,4 +306,4 @@ Prediction Interval: $(2654.342, 7085.244)$\
 
 **Summary:**\
 
-In our project, we started off by examining the different variables in the *diamonds* dataset. After looking at the distributions, correlations, and summaries, we put together a multiple linear regression model using *price* as the response variable. After this, we created a simple linear regression model using the same response variable and the independent variable *carat*. After finding out that this model potentially violated some assumptions, we applied a log-log transformation to the model, which then satisfied our assumptions. Starting from just 1 predictor, we slowly added a few predictors and examined the model's adjusted $R^2$ value to test if the variables were useful to improve our model. Finally, in order to get the best possible model, we used the AIC backwards stepwise regression to obtain the best model, which ended up excluding just the variable *y*. We then checked for multicollinearity by checking the variance inflation factors for our predictors in our best model. Lastly, we created a confidence interval and a prediction interval for a specific observation with the characteristics above.
+In our project, we started off by examining the different variables in the *diamonds* dataset, including looking at the head of the dataset. After looking at the distributions, correlations, and summaries of the dataset, we put together a multiple linear regression model using *price* as the response variable. After this, we created a simple linear regression model using the same response variable and the independent variable *carat*. After finding out that this model potentially violated some assumptions, we applied a log-log transformation to the model, which then satisfied our assumptions. Starting from just 1 predictor, we slowly added a few predictors and examined the model's adjusted $R^2$ value to test if the variables were useful to improve our model, which they were. Finally, in order to get the best possible model, we used the AIC backwards stepwise regression to obtain the best model, which ended up excluding just the variable *y*. We then checked for multicollinearity by checking the variance inflation factors for our predictors in our best model. Lastly, we created a confidence interval and a prediction interval for a specific observation with the characteristics above.
